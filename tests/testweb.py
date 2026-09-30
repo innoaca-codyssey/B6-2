@@ -1,3 +1,4 @@
+from contextlib import closing
 import os
 from pathlib import Path
 import socket
@@ -57,7 +58,7 @@ class WebTests(unittest.TestCase):
         cls.temporary.cleanup()
 
     def setUp(self):
-        with sqlite3.connect(self.db) as db:
+        with closing(sqlite3.connect(self.db)) as db, db:
             db.execute('DELETE FROM task')
 
     def request(self, path, data=None):
@@ -75,7 +76,7 @@ class WebTests(unittest.TestCase):
         path = headers['Location']
         for _ in range(3):
             self.assertIn('첫 할 일', self.request(path)[2])
-        with sqlite3.connect(self.db) as db:
+        with closing(sqlite3.connect(self.db)) as db, db:
             self.assertEqual(db.execute('SELECT COUNT(*) FROM task').fetchone()[0], 1)
         self.assertEqual(self.request(path + '/edit', {'title': '수정', 'description': '변경 내용'})[0], 303)
         self.assertIn('변경 내용', self.request(path)[2])

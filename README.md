@@ -139,3 +139,20 @@ GET은 화면 조회에 사용하고 상태를 바꾸는 요청은 POST로 분�
 PostgreSQL로 옮기려면 DB URL, DB 드라이버와 운영 설정을 바꾸고 타입/쿼리 차이를 검증해야 합니다. 카테고리 관계를 추가하려면 모델과 FK/relationship, 저장소 조회와 DTO, 관계 선택 폼이 바뀝니다. REST API로 바꾸면 라우터의 폼 수신과 TemplateResponse를 JSON 요청/응답으로 변경하며 서비스와 저장소 책임은 유지할 수 있습니다.
 
 템플릿 구성은 [FastAPI 문서](https://fastapi.tiangolo.com/advanced/templates/), DB 세션은 [SQLAlchemy 문서](https://docs.sqlalchemy.org/en/20/orm/session_basics.html)를 참고했습니다.
+
+## 최종 회귀 확인
+
+```bash
+$ .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
+test_all_views_and_escaped_content (testweb.WebTests.test_all_views_and_escaped_content) ... ok
+test_crud_prg_and_refresh (testweb.WebTests.test_crud_prg_and_refresh) ... ok
+test_database_survives_server_restart (testweb.WebTests.test_database_survives_server_restart) ... ok
+test_validation_and_missing_data (testweb.WebTests.test_validation_and_missing_data) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.505s
+
+OK
+```
+
+테스트용 SQLite 연결을 명시적으로 닫도록 수정했습니다. 리소스 경고를 오류로 처리한 검사에서도 같은 4개 시나리오가 통과했습니다.
