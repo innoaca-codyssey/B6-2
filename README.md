@@ -23,3 +23,35 @@ Python 3.14.7
 ```
 
 macOS arm64에 미션 전용 가상환경을 생성합니다.
+
+## 패키지 설치
+
+```bash
+Resolved 18 packages in 1.04s
+Downloading pydantic-core (1.8MiB)
+Downloading sqlalchemy (2.3MiB)
+ Downloaded pydantic-core
+ Downloaded sqlalchemy
+Prepared 18 packages in 1.42s
+Installed 18 packages in 67ms
+ + annotated-doc==0.0.5
+ + annotated-types==0.8.0
+ + anyio==4.15.1
+ + click==8.5.0
+ + fastapi==0.142.2
+ + h11==0.16.0
+ + idna==3.20
+ + jinja2==3.1.6
+ + markupsafe==3.0.3
+ + opentelemetry-api==1.45.0
+ + pydantic==2.13.5
+ + pydantic-core==2.46.5
+ + python-multipart==0.0.32
+ + sqlalchemy==2.1.1
+ + starlette==1.7.0
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + uvicorn==0.54.0
+```
+
+미션 전용 .venv에 설치했습니다. 아래 주요 패키지 버전을 requirements.txt에 고정합니다.
