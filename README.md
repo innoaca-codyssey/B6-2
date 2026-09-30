@@ -55,3 +55,20 @@ Installed 18 packages in 67ms
 ```
 
 미션 전용 .venv에 설치했습니다. 아래 주요 패키지 버전을 requirements.txt에 고정합니다.
+
+## CRUD와 저장 유지
+
+```bash
+$ .venv/bin/python -m unittest discover -s tests -v
+test_all_views_and_escaped_content (testweb.WebTests.test_all_views_and_escaped_content) ... ok
+test_crud_prg_and_refresh (testweb.WebTests.test_crud_prg_and_refresh) ... ok
+test_database_survives_server_restart (testweb.WebTests.test_database_survives_server_restart) ... ok
+test_validation_and_missing_data (testweb.WebTests.test_validation_and_missing_data) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.544s
+
+OK
+```
+
+테스트 서버에 HTTP 요청을 보내 등록/수정/삭제의 303 응답, GET 새로고침의 중복 없음, 입력 검증과 HTML 이스케이프, 없는 데이터 안내, 서버 재시작 후 DB 유지를 검사했습니다.
