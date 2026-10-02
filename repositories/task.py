@@ -6,8 +6,11 @@ class TaskRepository:
     def __init__(self, session):
         self.session = session
 
-    def all(self):
-        return self.session.scalars(select(Task).order_by(Task.created_at.desc(), Task.id.desc())).all()
+    def all(self, query=''):
+        statement = select(Task)
+        if query:
+            statement = statement.where(Task.title.contains(query, autoescape=True))
+        return self.session.scalars(statement.order_by(Task.created_at.desc(), Task.id.desc())).all()
 
     def get(self, identifier):
         return self.session.get(Task, identifier)

@@ -15,8 +15,8 @@ def home(request: Request):
 
 
 @router.get('/tasks')
-def listing(request: Request, db=Depends(get_db)):
-    return templates.TemplateResponse(request=request, name='list.html', context={'tasks': TaskService(db).list()})
+def listing(request: Request, q: str = '', db=Depends(get_db)):
+    return templates.TemplateResponse(request=request, name='list.html', context={'tasks': TaskService(db).list(q), 'q': q.strip()})
 
 
 @router.get('/tasks/new')

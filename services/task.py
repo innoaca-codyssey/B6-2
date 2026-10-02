@@ -19,8 +19,11 @@ class TaskService:
     def view(self, task):
         return TaskView(task.id, task.title, task.description, task.created_at)
 
-    def list(self):
-        return [self.view(task) for task in self.repository.all()]
+    def list(self, query=''):
+        query = query.strip()
+        if len(query) > 100:
+            raise ValueError('검색어는 100자 이내로 입력하세요')
+        return [self.view(task) for task in self.repository.all(query)]
 
     def require(self, identifier):
         task = self.repository.get(identifier)

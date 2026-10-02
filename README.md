@@ -156,3 +156,21 @@ OK
 ```
 
 테스트용 SQLite 연결을 명시적으로 닫도록 수정했습니다. 리소스 경고를 오류로 처리한 검사에서도 같은 4개 시나리오가 통과했습니다.
+
+## 보너스: 제목 검색
+
+```bash
+$ .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
+test_all_views_and_escaped_content (testweb.WebTests.test_all_views_and_escaped_content) ... ok
+test_crud_prg_and_refresh (testweb.WebTests.test_crud_prg_and_refresh) ... ok
+test_database_survives_server_restart (testweb.WebTests.test_database_survives_server_restart) ... ok
+test_search_literal_wildcards_and_empty_result (testweb.WebTests.test_search_literal_wildcards_and_empty_result) ... ok
+test_validation_and_missing_data (testweb.WebTests.test_validation_and_missing_data) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 2.855s
+
+OK
+```
+
+GET /tasks?q=검색어로 제목을 검색합니다. 빈 검색어는 전체 목록이며 조건은 폼에 유지됩니다. SQLAlchemy contains(autoescape=True)로 %와 _를 LIKE 와일드카드가 아닌 문자로 처리합니다. 기존 CRUD, 입력 검증, DB 재시작과 검색 검사 5개를 통과했습니다.

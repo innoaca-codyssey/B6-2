@@ -111,6 +111,17 @@ class WebTests(unittest.TestCase):
         self.__class__.start()
         self.assertIn('재시작', self.request(path)[2])
 
+    def test_search_literal_wildcards_and_empty_result(self):
+        for title in ['예산 100%_완료', '예산 1000완료', '운동']:
+            self.assertEqual(self.request('/tasks', {'title': title, 'description': '내용'})[0], 303)
+        body = self.request('/tasks?' + urllib.parse.urlencode({'q': ' %_ '}))[2]
+        self.assertIn('예산 100%_완료', body)
+        self.assertNotIn('예산 1000완료', body)
+        self.assertNotIn('운동</a>', body)
+        self.assertIn('맞는 할 일이 없습니다', self.request('/tasks?q=missing')[2])
+        self.assertIn('운동</a>', self.request('/tasks?q=')[2])
+        self.assertEqual(self.request('/tasks?q=' + 'a' * 101)[0], 400)
+
 
 if __name__ == '__main__':
     unittest.main()
